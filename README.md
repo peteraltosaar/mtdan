@@ -29,6 +29,7 @@ I am going to try and incorporate as many interesting technologies/practices I h
   * Confluence
   * Vim
   * IntelliJ
+  * Maven
 * DB
   * Postgres
 * Practices
