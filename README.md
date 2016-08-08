@@ -15,10 +15,12 @@ I am going to try and incorporate as many interesting technologies/practices I h
   * Mockito
   * Jackson
   * WireMock
+  * Guava
 * JavaScript
   * TypeScript?
   * Jasmine
   * Karma
+  * Protractor
   * Angular 1/2
 * General Web
   * HTML5
@@ -30,6 +32,8 @@ I am going to try and incorporate as many interesting technologies/practices I h
   * Vim
   * IntelliJ
   * Maven
+  * Sonar
+  * Flyway
 * DB
   * Postgres
 * Practices
