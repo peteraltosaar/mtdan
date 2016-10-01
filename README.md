@@ -34,6 +34,7 @@ I am going to try and incorporate as many interesting technologies/practices I h
   * Maven
   * Sonar
   * Flyway
+  * TeamCity [Done]
 * DB
   * Postgres
 * Practices
