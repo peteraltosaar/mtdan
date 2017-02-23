@@ -1,4 +1,4 @@
-package hello;
+package main;
 
 import com.altocorp.mtdan.domain.TodoItem;
 import org.springframework.web.bind.annotation.RequestMapping;
