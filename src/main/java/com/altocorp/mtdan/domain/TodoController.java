@@ -29,6 +29,7 @@ public class TodoController {
         TodoList todoList = new TodoList();
         todoList.add(new TodoItem("Todo Item 1"));
         todoList.add(new TodoItem("Todo Item 2"));
+        todoList.add(new TodoItem("Todo Item 3"));
 
         return todoList;
     }
