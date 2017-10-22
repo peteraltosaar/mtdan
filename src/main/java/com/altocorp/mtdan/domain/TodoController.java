@@ -15,7 +15,7 @@ public class TodoController {
     }
 
     @SuppressWarnings("unused")
-    @RequestMapping("/")
+    @RequestMapping("/todos")
     public TodoList todos() {
 
 //        TodoList todoList = new TodoList();
