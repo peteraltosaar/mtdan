@@ -1,0 +1,7 @@
+---
+applications:
+- name: mtdan
+  memory: 1G
+  random-route: true
+  path: target/mtdan-1.0-SNAPSHOT.jar
+
