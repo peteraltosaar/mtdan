@@ -31,6 +31,7 @@ public class TodoController {
         todoList.add(new TodoItem("Todo Item 2"));
         todoList.add(new TodoItem("Todo Item 3"));
         todoList.add(new TodoItem("Todo Item 4"));
+        todoList.add(new TodoItem("DevOps COE"));
 
         return todoList;
     }
