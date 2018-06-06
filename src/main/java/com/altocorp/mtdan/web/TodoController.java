@@ -1,31 +1,20 @@
-package com.altocorp.mtdan.domain;
+package com.altocorp.mtdan.web;
 
+import com.altocorp.mtdan.domain.TodoItem;
+import com.altocorp.mtdan.domain.TodoList;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 @RestController
 public class TodoController {
 
-    private final TodoRepository todoRepository;
+    public TodoController() {
 
-    public TodoController(TodoRepository todoRepository) {
-        this.todoRepository = todoRepository;
     }
 
-    @SuppressWarnings("unused")
     @RequestMapping("/todos")
     public TodoList todos() {
 
-//        TodoList todoList = new TodoList();
-//
-//        List<TodoItem> allTodoItems = todoRepository.findAll();
-//        for (TodoItem todoItem : allTodoItems) {
-//            todoList.add(todoItem);
-//        }
-//
-//        return todoList;
         TodoList todoList = new TodoList();
         todoList.add(new TodoItem("Todo Item 1"));
         todoList.add(new TodoItem("Todo Item 2"));

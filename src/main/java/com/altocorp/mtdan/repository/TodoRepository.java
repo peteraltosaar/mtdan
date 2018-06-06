@@ -1,4 +1,4 @@
-package com.altocorp.mtdan.domain;
+package com.altocorp.mtdan.repository;
 
 import com.altocorp.mtdan.domain.TodoItem;
 import org.springframework.data.repository.CrudRepository;

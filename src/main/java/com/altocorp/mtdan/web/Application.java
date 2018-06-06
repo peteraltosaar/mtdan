@@ -1,4 +1,4 @@
-package com.altocorp.mtdan.domain;
+package com.altocorp.mtdan.web;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
