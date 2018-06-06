@@ -4,8 +4,7 @@ import com.altocorp.mtdan.domain.TodoItem;
 import com.altocorp.mtdan.domain.TodoList;
 import com.altocorp.mtdan.repository.TodoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -27,12 +26,18 @@ public class TodoController {
         todoRepository.save(new TodoItem("Move TodoItem to an entities package"));
     }
 
-    @RequestMapping("/todos")
+    @GetMapping(value = "/todos")
     public TodoList todos() {
 
         List<TodoItem> todoItems = todoRepository.findAll();
-
         return new TodoList(todoItems);
     }
+
+    @PostMapping(value = "/do/{newTodo}")
+    public void newTodo(@PathVariable String newTodo) {
+
+        todoRepository.save(new TodoItem(newTodo));
+    }
+
 
 }
