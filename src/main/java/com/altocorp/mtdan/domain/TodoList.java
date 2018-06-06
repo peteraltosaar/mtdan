@@ -5,10 +5,14 @@ import java.util.List;
 
 public class TodoList {
 
-    List<TodoItem> todoItems;
+    private List<TodoItem> todoItems;
 
     public TodoList() {
         todoItems = new ArrayList<>();
+    }
+
+    public TodoList(List<TodoItem> todoItems) {
+        this.todoItems = todoItems;
     }
 
     public void add(TodoItem todoItem) {

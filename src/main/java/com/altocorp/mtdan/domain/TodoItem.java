@@ -17,6 +17,8 @@ public class TodoItem {
     private String todo;
     private boolean done;
 
+    protected TodoItem() {}
+
     public TodoItem(String todo) {
 
         this.todo = todo;

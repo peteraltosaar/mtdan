@@ -2,12 +2,15 @@ package com.altocorp.mtdan.web;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
+@EntityScan(basePackages = {"com.altocorp.mtdan.domain"})
+@EnableJpaRepositories(basePackages = {"com.altocorp.mtdan.repository"})
 public class Application {
 
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
     }
-
 }
