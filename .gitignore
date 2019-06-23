@@ -2,3 +2,4 @@
 *.iml
 target/
 *.db
+src/main/resources/secrets.properties
