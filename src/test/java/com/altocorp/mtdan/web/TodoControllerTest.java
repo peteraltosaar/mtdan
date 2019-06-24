@@ -1,31 +1,41 @@
 package com.altocorp.mtdan.web;
 
-import com.altocorp.mtdan.domain.TodoList;
+import com.altocorp.mtdan.domain.Todo;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
-import static org.junit.Assert.*;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.when;
+
 
 public class TodoControllerTest {
 
     private TodoController fixture;
 
+    @Mock
+    private TodoService todoService;
+
     @Before
     public void setUp() {
-        fixture = new TodoController();
+        MockitoAnnotations.initMocks(this);
+        fixture = new TodoController(todoService);
     }
 
     @Test
-    public void initializedTodoController_callingTodos_returnsInitializedListOFTodos() {
-        TodoList actual = fixture.todos();
-        assertEquals(4, actual.getTodoItems().size());
-    }
+    public void callingTodosEndpointDelegatesToTodoServiceForTodos() {
 
-    @Test
-    public void callingNewTodo_addsATodo() {
-        String expectedTodo = "Do Something";
-        fixture.newTodo(expectedTodo);
-        TodoList todos = fixture.todos();
-        assertEquals(expectedTodo, todos.getTodoItems().get(4).getTodo());
+        List<Todo> expectedTodos = new ArrayList<>();
+        expectedTodos.add(new Todo());
+
+        when(todoService.getTodos()).thenReturn(expectedTodos);
+
+        List<Todo> actualTodos = fixture.todos();
+
+        assertThat(actualTodos).isEqualTo(expectedTodos);
     }
 }
