@@ -1,8 +1,8 @@
 package com.altocorp.mtdan.web;
 
-import com.altocorp.mtdan.domain.Label;
-import com.altocorp.mtdan.domain.Project;
-import com.altocorp.mtdan.domain.Todo;
+import com.altocorp.mtdan.todoist.TodoistLabel;
+import com.altocorp.mtdan.todoist.TodoistProject;
+import com.altocorp.mtdan.todoist.TodoistTodo;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -38,15 +38,15 @@ public class TodoServiceTest {
         httpHeaders.add("Authorization", "Bearer AAABBBCCCDDD");
         HttpEntity httpEntity = new HttpEntity(httpHeaders);
 
-        List<Todo> expectedTodos = new ArrayList<>();
-        expectedTodos.add(new Todo());
+        List<TodoistTodo> expectedTodoistTodos = new ArrayList<>();
+        expectedTodoistTodos.add(new TodoistTodo());
 
-        ResponseEntity<List<Todo>> expectedResponseEntity = new ResponseEntity<>(expectedTodos, HttpStatus.OK);
-        when(restTemplate.exchange("https://beta.todoist.com/API/v8/tasks", HttpMethod.GET, httpEntity, new ParameterizedTypeReference<List<Todo>>() {})).thenReturn(expectedResponseEntity);
+        ResponseEntity<List<TodoistTodo>> expectedResponseEntity = new ResponseEntity<>(expectedTodoistTodos, HttpStatus.OK);
+        when(restTemplate.exchange("https://beta.todoist.com/API/v8/tasks", HttpMethod.GET, httpEntity, new ParameterizedTypeReference<List<TodoistTodo>>() {})).thenReturn(expectedResponseEntity);
 
-        List<Todo> actualTodos = fixture.getTodos();
+        List<TodoistTodo> actualTodoistTodos = fixture.getTodos();
 
-        assertThat(actualTodos).isEqualTo(expectedTodos);
+        assertThat(actualTodoistTodos).isEqualTo(expectedTodoistTodos);
     }
 
     @Test
@@ -56,15 +56,15 @@ public class TodoServiceTest {
         httpHeaders.add("Authorization", "Bearer AAABBBCCCDDD");
         HttpEntity httpEntity = new HttpEntity(httpHeaders);
 
-        List<Project> expectedProjects = new ArrayList<>();
-        expectedProjects.add(new Project());
+        List<TodoistProject> expectedTodoistProjects = new ArrayList<>();
+        expectedTodoistProjects.add(new TodoistProject());
 
-        ResponseEntity<List<Project>> expectedResponseEntity = new ResponseEntity<>(expectedProjects, HttpStatus.OK);
-        when(restTemplate.exchange("https://beta.todoist.com/API/v8/projects", HttpMethod.GET, httpEntity, new ParameterizedTypeReference<List<Project>>() {})).thenReturn(expectedResponseEntity);
+        ResponseEntity<List<TodoistProject>> expectedResponseEntity = new ResponseEntity<>(expectedTodoistProjects, HttpStatus.OK);
+        when(restTemplate.exchange("https://beta.todoist.com/API/v8/projects", HttpMethod.GET, httpEntity, new ParameterizedTypeReference<List<TodoistProject>>() {})).thenReturn(expectedResponseEntity);
 
-        List<Project> actualProjects = fixture.getProjects();
+        List<TodoistProject> actualTodoistProjects = fixture.getProjects();
 
-        assertThat(actualProjects).isEqualTo(expectedProjects);
+        assertThat(actualTodoistProjects).isEqualTo(expectedTodoistProjects);
     }
 
     @Test
@@ -74,14 +74,14 @@ public class TodoServiceTest {
         httpHeaders.add("Authorization", "Bearer AAABBBCCCDDD");
         HttpEntity httpEntity = new HttpEntity(httpHeaders);
 
-        List<Label> expectedLabels = new ArrayList<>();
-        expectedLabels.add(new Label());
+        List<TodoistLabel> expectedTodoistLabels = new ArrayList<>();
+        expectedTodoistLabels.add(new TodoistLabel());
 
-        ResponseEntity<List<Label>> expectedResponseEntity = new ResponseEntity<>(expectedLabels, HttpStatus.OK);
-        when(restTemplate.exchange("https://beta.todoist.com/API/v8/labels", HttpMethod.GET, httpEntity, new ParameterizedTypeReference<List<Label>>() {})).thenReturn(expectedResponseEntity);
+        ResponseEntity<List<TodoistLabel>> expectedResponseEntity = new ResponseEntity<>(expectedTodoistLabels, HttpStatus.OK);
+        when(restTemplate.exchange("https://beta.todoist.com/API/v8/labels", HttpMethod.GET, httpEntity, new ParameterizedTypeReference<List<TodoistLabel>>() {})).thenReturn(expectedResponseEntity);
 
-        List<Label> actualLabels = fixture.getLabels();
+        List<TodoistLabel> actualTodoistLabels = fixture.getLabels();
 
-        assertThat(actualLabels).isEqualTo(expectedLabels);
+        assertThat(actualTodoistLabels).isEqualTo(expectedTodoistLabels);
     }
 }

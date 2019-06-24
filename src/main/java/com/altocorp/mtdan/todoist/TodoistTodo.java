@@ -1,19 +1,28 @@
-package com.altocorp.mtdan.domain;
+package com.altocorp.mtdan.todoist;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
-public class Todo {
+public class TodoistTodo {
 
     private long id;
+    @JsonProperty("project_id")
     private String projectId;
     private String content;
-    private List<String> labels;
+    @JsonProperty("label_ids")
+    private List<Long> labelIds;
     private int order;
     private int indent;
     private int priority;
+    @JsonProperty("comment_count")
     private int commentCount;
     private String created;
     private String url;
+
+    public TodoistTodo() {
+
+    }
 
     public long getId() {
         return id;
@@ -39,12 +48,12 @@ public class Todo {
         this.content = content;
     }
 
-    public List<String> getLabels() {
-        return labels;
+    public List<Long> getLabelIds() {
+        return labelIds;
     }
 
-    public void setLabels(List<String> labels) {
-        this.labels = labels;
+    public void setLabelIds(List<Long> labelIds) {
+        this.labelIds = labelIds;
     }
 
     public int getOrder() {

@@ -1,6 +1,6 @@
-package com.altocorp.mtdan.domain;
+package com.altocorp.mtdan.todoist;
 
-public class Label {
+public class TodoistLabel {
 
     private long id;
     private String name;

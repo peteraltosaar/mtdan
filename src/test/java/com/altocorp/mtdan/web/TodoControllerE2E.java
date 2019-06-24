@@ -1,8 +1,8 @@
 package com.altocorp.mtdan.web;
 
-import com.altocorp.mtdan.domain.Label;
-import com.altocorp.mtdan.domain.Project;
-import com.altocorp.mtdan.domain.Todo;
+import com.altocorp.mtdan.todoist.TodoistLabel;
+import com.altocorp.mtdan.todoist.TodoistProject;
+import com.altocorp.mtdan.todoist.TodoistTodo;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -36,22 +36,22 @@ public class TodoControllerE2E {
 
     @Test
     public void callingTodosEndpoint_delegatesToTodosServiceToReturnTodos() {
-        ResponseEntity<List<Todo>> todosEntity = restTemplate.exchange("http://localhost:" + port + "/todos", HttpMethod.GET, null, new ParameterizedTypeReference<List<Todo>>() {});
-        List<Todo> todos = todosEntity.getBody();
-        assertThat(todos.size()).isGreaterThan(0);
+        ResponseEntity<List<TodoistTodo>> todosEntity = restTemplate.exchange("http://localhost:" + port + "/todos", HttpMethod.GET, null, new ParameterizedTypeReference<List<TodoistTodo>>() {});
+        List<TodoistTodo> todoistTodos = todosEntity.getBody();
+        assertThat(todoistTodos.size()).isGreaterThan(0);
     }
 
     @Test
     public void callingProjectsEndpoint_delegatesToTodosServiceToReturnProjects() {
-        ResponseEntity<List<Project>> projectsEntity = restTemplate.exchange("http://localhost:" + port + "/projects", HttpMethod.GET, null, new ParameterizedTypeReference<List<Project>>() {});
-        List<Project> projects = projectsEntity.getBody();
-        assertThat(projects.size()).isGreaterThan(0);
+        ResponseEntity<List<TodoistProject>> projectsEntity = restTemplate.exchange("http://localhost:" + port + "/projects", HttpMethod.GET, null, new ParameterizedTypeReference<List<TodoistProject>>() {});
+        List<TodoistProject> todoistProjects = projectsEntity.getBody();
+        assertThat(todoistProjects.size()).isGreaterThan(0);
     }
 
     @Test
     public void callingLabelsEndpoint_delegatesToTodosServiceToReturnLabels() {
-        ResponseEntity<List<Label>> projectsEntity = restTemplate.exchange("http://localhost:" + port + "/labels", HttpMethod.GET, null, new ParameterizedTypeReference<List<Label>>() {});
-        List<Label> projects = projectsEntity.getBody();
+        ResponseEntity<List<TodoistLabel>> projectsEntity = restTemplate.exchange("http://localhost:" + port + "/labels", HttpMethod.GET, null, new ParameterizedTypeReference<List<TodoistLabel>>() {});
+        List<TodoistLabel> projects = projectsEntity.getBody();
         assertThat(projects.size()).isGreaterThan(0);
     }
 }

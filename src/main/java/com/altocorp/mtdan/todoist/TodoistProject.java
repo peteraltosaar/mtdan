@@ -1,8 +1,8 @@
-package com.altocorp.mtdan.domain;
+package com.altocorp.mtdan.todoist;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class Project {
+public class TodoistProject {
 
     private long id;
     private String name;

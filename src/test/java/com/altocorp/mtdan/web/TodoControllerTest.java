@@ -1,8 +1,8 @@
 package com.altocorp.mtdan.web;
 
-import com.altocorp.mtdan.domain.Label;
-import com.altocorp.mtdan.domain.Project;
-import com.altocorp.mtdan.domain.Todo;
+import com.altocorp.mtdan.todoist.TodoistLabel;
+import com.altocorp.mtdan.todoist.TodoistProject;
+import com.altocorp.mtdan.todoist.TodoistTodo;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -31,39 +31,39 @@ public class TodoControllerTest {
     @Test
     public void callingTodosEndpoint_delegatesToTodoServiceForTodos() {
 
-        List<Todo> expectedTodos = new ArrayList<>();
-        expectedTodos.add(new Todo());
+        List<TodoistTodo> expectedTodoistTodos = new ArrayList<>();
+        expectedTodoistTodos.add(new TodoistTodo());
 
-        when(todoService.getTodos()).thenReturn(expectedTodos);
+        when(todoService.getTodos()).thenReturn(expectedTodoistTodos);
 
-        List<Todo> actualTodos = fixture.todos();
+        List<TodoistTodo> actualTodoistTodos = fixture.todos();
 
-        assertThat(actualTodos).isEqualTo(expectedTodos);
+        assertThat(actualTodoistTodos).isEqualTo(expectedTodoistTodos);
     }
 
     @Test
     public void callingProjectsEndpoint_delegatesToTodoServiceForProjects() {
 
-        List<Project> expectedProjects = new ArrayList<>();
-        expectedProjects.add(new Project());
+        List<TodoistProject> expectedTodoistProjects = new ArrayList<>();
+        expectedTodoistProjects.add(new TodoistProject());
 
-        when(todoService.getProjects()).thenReturn(expectedProjects);
+        when(todoService.getProjects()).thenReturn(expectedTodoistProjects);
 
-        List<Project> actualProjects = fixture.projects();
+        List<TodoistProject> actualTodoistProjects = fixture.projects();
 
-        assertThat(actualProjects).isEqualTo(expectedProjects);
+        assertThat(actualTodoistProjects).isEqualTo(expectedTodoistProjects);
     }
 
     @Test
     public void callingLabelsEndpoint_delegatesToTodoServiceForLabels() {
 
-        List<Label> expectedLabels = new ArrayList<>();
-        expectedLabels.add(new Label());
+        List<TodoistLabel> expectedTodoistLabels = new ArrayList<>();
+        expectedTodoistLabels.add(new TodoistLabel());
 
-        when(todoService.getLabels()).thenReturn(expectedLabels);
+        when(todoService.getLabels()).thenReturn(expectedTodoistLabels);
 
-        List<Label> actualLabels = fixture.labels();
+        List<TodoistLabel> actualTodoistLabels = fixture.labels();
 
-        assertThat(actualLabels).isEqualTo(expectedLabels);
+        assertThat(actualTodoistLabels).isEqualTo(expectedTodoistLabels);
     }
 }
