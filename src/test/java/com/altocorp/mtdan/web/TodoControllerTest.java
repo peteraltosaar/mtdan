@@ -1,5 +1,6 @@
 package com.altocorp.mtdan.web;
 
+import com.altocorp.mtdan.domain.Label;
 import com.altocorp.mtdan.domain.Project;
 import com.altocorp.mtdan.domain.Todo;
 import org.junit.Before;
@@ -51,5 +52,18 @@ public class TodoControllerTest {
         List<Project> actualProjects = fixture.projects();
 
         assertThat(actualProjects).isEqualTo(expectedProjects);
+    }
+
+    @Test
+    public void callingLabelsEndpoint_delegatesToTodoServiceForLabels() {
+
+        List<Label> expectedLabels = new ArrayList<>();
+        expectedLabels.add(new Label());
+
+        when(todoService.getLabels()).thenReturn(expectedLabels);
+
+        List<Label> actualLabels = fixture.labels();
+
+        assertThat(actualLabels).isEqualTo(expectedLabels);
     }
 }

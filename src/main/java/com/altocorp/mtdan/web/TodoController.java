@@ -1,5 +1,6 @@
 package com.altocorp.mtdan.web;
 
+import com.altocorp.mtdan.domain.Label;
 import com.altocorp.mtdan.domain.Project;
 import com.altocorp.mtdan.domain.Todo;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,5 +25,10 @@ public class TodoController {
     @GetMapping(value = "/projects")
     public List<Project> projects() {
         return todoService.getProjects();
+    }
+
+    @GetMapping(value = "/labels")
+    public List<Label> labels() {
+        return todoService.getLabels();
     }
 }

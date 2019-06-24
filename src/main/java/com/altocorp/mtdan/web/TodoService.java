@@ -1,5 +1,6 @@
 package com.altocorp.mtdan.web;
 
+import com.altocorp.mtdan.domain.Label;
 import com.altocorp.mtdan.domain.Project;
 import com.altocorp.mtdan.domain.Todo;
 import org.springframework.core.ParameterizedTypeReference;
@@ -34,6 +35,14 @@ public class TodoService {
         httpHeaders.add("Authorization", "Bearer " + todoistBearerToken);
         HttpEntity httpEntity = new HttpEntity(httpHeaders);
         ResponseEntity<List<Project>> projectsEntity = restTemplate.exchange("https://beta.todoist.com/API/v8/projects", HttpMethod.GET, httpEntity, new ParameterizedTypeReference<List<Project>>() {});
+        return projectsEntity.getBody();
+    }
+
+    List<Label> getLabels() {
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add("Authorization", "Bearer " + todoistBearerToken);
+        HttpEntity httpEntity = new HttpEntity(httpHeaders);
+        ResponseEntity<List<Label>> projectsEntity = restTemplate.exchange("https://beta.todoist.com/API/v8/labels", HttpMethod.GET, httpEntity, new ParameterizedTypeReference<List<Label>>() {});
         return projectsEntity.getBody();
     }
 }

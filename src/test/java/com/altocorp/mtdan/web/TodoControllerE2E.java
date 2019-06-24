@@ -1,5 +1,6 @@
 package com.altocorp.mtdan.web;
 
+import com.altocorp.mtdan.domain.Label;
 import com.altocorp.mtdan.domain.Project;
 import com.altocorp.mtdan.domain.Todo;
 import org.junit.Before;
@@ -44,6 +45,13 @@ public class TodoControllerE2E {
     public void callingProjectsEndpoint_delegatesToTodosServiceToReturnProjects() {
         ResponseEntity<List<Project>> projectsEntity = restTemplate.exchange("http://localhost:" + port + "/projects", HttpMethod.GET, null, new ParameterizedTypeReference<List<Project>>() {});
         List<Project> projects = projectsEntity.getBody();
+        assertThat(projects.size()).isGreaterThan(0);
+    }
+
+    @Test
+    public void callingLabelsEndpoint_delegatesToTodosServiceToReturnLabels() {
+        ResponseEntity<List<Label>> projectsEntity = restTemplate.exchange("http://localhost:" + port + "/labels", HttpMethod.GET, null, new ParameterizedTypeReference<List<Label>>() {});
+        List<Label> projects = projectsEntity.getBody();
         assertThat(projects.size()).isGreaterThan(0);
     }
 }
