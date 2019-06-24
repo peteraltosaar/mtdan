@@ -1,5 +1,6 @@
 package com.altocorp.mtdan.web;
 
+import com.altocorp.mtdan.domain.Project;
 import com.altocorp.mtdan.domain.Todo;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
@@ -20,11 +21,19 @@ public class TodoService {
         this.todoistBearerToken = todoistBearerToken;
     }
 
-    public List<Todo> getTodos() {
+    List<Todo> getTodos() {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add("Authorization", "Bearer " + todoistBearerToken);
         HttpEntity httpEntity = new HttpEntity(httpHeaders);
-        ResponseEntity<List<Todo>> todoList = restTemplate.exchange("https://beta.todoist.com/API/v8/tasks", HttpMethod.GET, httpEntity, new ParameterizedTypeReference<List<Todo>>() {});
-        return todoList.getBody();
+        ResponseEntity<List<Todo>> todosEntity = restTemplate.exchange("https://beta.todoist.com/API/v8/tasks", HttpMethod.GET, httpEntity, new ParameterizedTypeReference<List<Todo>>() {});
+        return todosEntity.getBody();
+    }
+
+    List<Project> getProjects() {
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add("Authorization", "Bearer " + todoistBearerToken);
+        HttpEntity httpEntity = new HttpEntity(httpHeaders);
+        ResponseEntity<List<Project>> projectsEntity = restTemplate.exchange("https://beta.todoist.com/API/v8/projects", HttpMethod.GET, httpEntity, new ParameterizedTypeReference<List<Project>>() {});
+        return projectsEntity.getBody();
     }
 }

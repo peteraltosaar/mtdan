@@ -1,5 +1,6 @@
 package com.altocorp.mtdan.web;
 
+import com.altocorp.mtdan.domain.Project;
 import com.altocorp.mtdan.domain.Todo;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,6 +18,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 
+@SuppressWarnings("ConstantConditions")
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT, classes = {Application.class})
 public class TodoControllerE2E {
@@ -32,9 +34,16 @@ public class TodoControllerE2E {
     }
 
     @Test
-        public void callingTodosEndpoint_returnsTodos() {
+    public void callingTodosEndpoint_delegatesToTodosServiceToReturnTodos() {
         ResponseEntity<List<Todo>> todosEntity = restTemplate.exchange("http://localhost:" + port + "/todos", HttpMethod.GET, null, new ParameterizedTypeReference<List<Todo>>() {});
         List<Todo> todos = todosEntity.getBody();
         assertThat(todos.size()).isGreaterThan(0);
+    }
+
+    @Test
+    public void callingProjectsEndpoint_delegatesToTodosServiceToReturnProjects() {
+        ResponseEntity<List<Project>> projectsEntity = restTemplate.exchange("http://localhost:" + port + "/projects", HttpMethod.GET, null, new ParameterizedTypeReference<List<Project>>() {});
+        List<Project> projects = projectsEntity.getBody();
+        assertThat(projects.size()).isGreaterThan(0);
     }
 }

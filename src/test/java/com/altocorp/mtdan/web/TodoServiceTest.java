@@ -1,5 +1,6 @@
 package com.altocorp.mtdan.web;
 
+import com.altocorp.mtdan.domain.Project;
 import com.altocorp.mtdan.domain.Todo;
 import org.junit.Before;
 import org.junit.Test;
@@ -30,7 +31,7 @@ public class TodoServiceTest {
     }
 
     @Test
-    public void callingGetTodosCallsRestTemplateForTodos() {
+    public void callingGetTodos_callsRestTemplateForTodos() {
 
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add("Authorization", "Bearer AAABBBCCCDDD");
@@ -45,5 +46,23 @@ public class TodoServiceTest {
         List<Todo> actualTodos = fixture.getTodos();
 
         assertThat(actualTodos).isEqualTo(expectedTodos);
+    }
+
+    @Test
+    public void callingGetProjects_callsRestTemplateForProjects() {
+
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add("Authorization", "Bearer AAABBBCCCDDD");
+        HttpEntity httpEntity = new HttpEntity(httpHeaders);
+
+        List<Project> expectedProjects = new ArrayList<>();
+        expectedProjects.add(new Project());
+
+        ResponseEntity<List<Project>> expectedResponseEntity = new ResponseEntity<>(expectedProjects, HttpStatus.OK);
+        when(restTemplate.exchange("https://beta.todoist.com/API/v8/projects", HttpMethod.GET, httpEntity, new ParameterizedTypeReference<List<Project>>() {})).thenReturn(expectedResponseEntity);
+
+        List<Project> actualProjects = fixture.getProjects();
+
+        assertThat(actualProjects).isEqualTo(expectedProjects);
     }
 }

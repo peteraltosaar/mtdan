@@ -1,5 +1,6 @@
 package com.altocorp.mtdan.web;
 
+import com.altocorp.mtdan.domain.Project;
 import com.altocorp.mtdan.domain.Todo;
 import org.junit.Before;
 import org.junit.Test;
@@ -27,7 +28,7 @@ public class TodoControllerTest {
     }
 
     @Test
-    public void callingTodosEndpointDelegatesToTodoServiceForTodos() {
+    public void callingTodosEndpoint_delegatesToTodoServiceForTodos() {
 
         List<Todo> expectedTodos = new ArrayList<>();
         expectedTodos.add(new Todo());
@@ -37,5 +38,18 @@ public class TodoControllerTest {
         List<Todo> actualTodos = fixture.todos();
 
         assertThat(actualTodos).isEqualTo(expectedTodos);
+    }
+
+    @Test
+    public void callingProjectsEndpoint_delegatesToTodoServiceForProjects() {
+
+        List<Project> expectedProjects = new ArrayList<>();
+        expectedProjects.add(new Project());
+
+        when(todoService.getProjects()).thenReturn(expectedProjects);
+
+        List<Project> actualProjects = fixture.projects();
+
+        assertThat(actualProjects).isEqualTo(expectedProjects);
     }
 }
