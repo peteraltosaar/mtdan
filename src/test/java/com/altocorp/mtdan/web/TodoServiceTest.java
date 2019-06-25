@@ -60,9 +60,13 @@ public class TodoServiceTest {
 
         List<Todo> actualTodos = fixture.getTodos();
 
-        // Fix this assertion to be on the object as a whole, once it has an Equals implementation
-        Todo actualTodo = actualTodos.get(0);
-        assertThat(actualTodo.getLabels().get(0)).isEqualTo("some_label");
+        List<Todo> expectedTodos = new ArrayList<>();
+        Todo expectedTodo = new Todo();
+        List<String> expectedLabels = new ArrayList<>();
+        expectedLabels.add("some_label");
+        expectedTodo.setLabels(expectedLabels);
+        expectedTodos.add(expectedTodo);
+        assertThat(actualTodos).isEqualTo(expectedTodos);
     }
 
     @Test

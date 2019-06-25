@@ -1,6 +1,7 @@
 package com.altocorp.mtdan.domain;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Todo {
 
@@ -93,5 +94,27 @@ public class Todo {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Todo todo = (Todo) o;
+        return id == todo.id &&
+                order == todo.order &&
+                indent == todo.indent &&
+                priority == todo.priority &&
+                commentCount == todo.commentCount &&
+                Objects.equals(projectId, todo.projectId) &&
+                Objects.equals(content, todo.content) &&
+                Objects.equals(labels, todo.labels) &&
+                Objects.equals(created, todo.created) &&
+                Objects.equals(url, todo.url);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, projectId, content, labels, order, indent, priority, commentCount, created, url);
     }
 }
