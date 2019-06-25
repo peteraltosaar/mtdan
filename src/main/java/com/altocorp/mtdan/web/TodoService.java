@@ -4,6 +4,7 @@ import com.altocorp.mtdan.domain.Todo;
 import com.altocorp.mtdan.todoist.TodoistLabel;
 import com.altocorp.mtdan.todoist.TodoistProject;
 import com.altocorp.mtdan.todoist.TodoistTodo;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -26,7 +27,8 @@ public class TodoService {
         this.todoistBearerToken = todoistBearerToken;
     }
 
-    List<Todo> getTodos() {
+    @Cacheable("todoistTasks")
+    public List<Todo> getTodos() {
         HttpEntity httpEntity = createTodoistHttpEntity();
         ResponseEntity<List<TodoistTodo>> todosEntity = restTemplate.exchange("https://beta.todoist.com/API/v8/tasks", HttpMethod.GET, httpEntity, new ParameterizedTypeReference<List<TodoistTodo>>() {});
         List<TodoistLabel> todoistLabels = getLabels();
@@ -34,13 +36,15 @@ public class TodoService {
         return createDomainTodos(todoistTodos, todoistLabels);
     }
 
-    List<TodoistProject> getProjects() {
+    @Cacheable("todoistProjects")
+    public List<TodoistProject> getProjects() {
         HttpEntity httpEntity = createTodoistHttpEntity();
         ResponseEntity<List<TodoistProject>> projectsEntity = restTemplate.exchange("https://beta.todoist.com/API/v8/projects", HttpMethod.GET, httpEntity, new ParameterizedTypeReference<List<TodoistProject>>() {});
         return projectsEntity.getBody();
     }
 
-    List<TodoistLabel> getLabels() {
+    @Cacheable("todoistLabels")
+    public List<TodoistLabel> getLabels() {
         HttpEntity httpEntity = createTodoistHttpEntity();
         ResponseEntity<List<TodoistLabel>> projectsEntity = restTemplate.exchange("https://beta.todoist.com/API/v8/labels", HttpMethod.GET, httpEntity, new ParameterizedTypeReference<List<TodoistLabel>>() {});
         return projectsEntity.getBody();
