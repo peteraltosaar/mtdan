@@ -33,8 +33,9 @@ public class TodoService {
         HttpEntity httpEntity = createTodoistHttpEntity();
         ResponseEntity<List<TodoistTodo>> todosEntity = restTemplate.exchange("https://beta.todoist.com/API/v8/tasks", HttpMethod.GET, httpEntity, new ParameterizedTypeReference<List<TodoistTodo>>() {});
         List<TodoistLabel> todoistLabels = getLabels();
+        List<Project> projects = getProjects();
         List<TodoistTodo> todoistTodos = todosEntity.getBody();
-        return createDomainTodos(todoistTodos, todoistLabels);
+        return createDomainTodos(todoistTodos, projects, todoistLabels);
     }
 
     @Cacheable("todoistProjects")
@@ -58,14 +59,16 @@ public class TodoService {
         return new HttpEntity(httpHeaders);
     }
 
-    private List<Todo> createDomainTodos(List<TodoistTodo> todoistTodos, List<TodoistLabel> todoistLabels) {
+    private List<Todo> createDomainTodos(List<TodoistTodo> todoistTodos, List<Project> todoistProjects, List<TodoistLabel> todoistLabels) {
         Map<Long, String> mapOfLabelIdsToLabelNames = createMapOfLabelIdsToLabelNames(todoistLabels);
+        Map<Long, String> mapOfProjectIdsToProjectNames = createMapOfProjectIdsToProjectNames(todoistProjects);
 
         List<Todo> domainTodos = new ArrayList<>();
         for (TodoistTodo todoistTodo : todoistTodos) {
             Todo domainTodo = new Todo();
             domainTodo.setId(todoistTodo.getId());
-            domainTodo.setProjectId(todoistTodo.getProjectId());
+            String projectName = mapOfProjectIdsToProjectNames.get(Long.valueOf(todoistTodo.getProjectId()));
+            domainTodo.setProject(projectName);
             domainTodo.setContent(todoistTodo.getContent());
             List<String> labels = new ArrayList<>();
             for (Long id : todoistTodo.getLabelIds()) {
@@ -85,6 +88,10 @@ public class TodoService {
 
     private Map<Long, String> createMapOfLabelIdsToLabelNames(List<TodoistLabel> todoistLabels) {
         return todoistLabels.stream().collect(Collectors.toMap(TodoistLabel::getId, TodoistLabel::getName, (a, b) -> b));
+    }
+
+    private Map<Long, String> createMapOfProjectIdsToProjectNames(List<Project> projects) {
+        return projects.stream().collect(Collectors.toMap(Project::getId, Project::getName, (a, b) -> b));
     }
 
     private List<Project> createDomainProjects(List<TodoistProject> todoistProjects) {

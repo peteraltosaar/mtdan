@@ -42,6 +42,7 @@ public class TodoServiceTest {
 
         List<TodoistTodo> expectedTodoistTodos = new ArrayList<>();
         TodoistTodo todoistTodo = new TodoistTodo();
+        todoistTodo.setProjectId("50");
         List<Long> labelIds = new ArrayList<>();
         labelIds.add(1L);
         todoistTodo.setLabelIds(labelIds);
@@ -49,6 +50,18 @@ public class TodoServiceTest {
 
         ResponseEntity<List<TodoistTodo>> expectedTasksResponseEntity = new ResponseEntity<>(expectedTodoistTodos, HttpStatus.OK);
         when(restTemplate.exchange("https://beta.todoist.com/API/v8/tasks", HttpMethod.GET, httpEntity, new ParameterizedTypeReference<List<TodoistTodo>>() {})).thenReturn(expectedTasksResponseEntity);
+
+        List<TodoistProject> expectedTodoistProjects = new ArrayList<>();
+        TodoistProject todoistProject = new TodoistProject();
+        todoistProject.setId(50);
+        todoistProject.setName("some_project");
+        todoistProject.setOrder(1);
+        todoistProject.setIndent(1);
+        todoistProject.setCommentCount(0);
+        expectedTodoistProjects.add(todoistProject);
+
+        ResponseEntity<List<TodoistProject>> expectedProjectsResponseEntity = new ResponseEntity<>(expectedTodoistProjects, HttpStatus.OK);
+        when(restTemplate.exchange("https://beta.todoist.com/API/v8/projects", HttpMethod.GET, httpEntity, new ParameterizedTypeReference<List<TodoistProject>>() {})).thenReturn(expectedProjectsResponseEntity);
 
         List<TodoistLabel> expectedTodoistLabels = new ArrayList<>();
         TodoistLabel todoistLabel = new TodoistLabel();
@@ -66,6 +79,7 @@ public class TodoServiceTest {
         List<String> expectedLabels = new ArrayList<>();
         expectedLabels.add("some_label");
         expectedTodo.setLabels(expectedLabels);
+        expectedTodo.setProject("some_project");
         expectedTodos.add(expectedTodo);
         assertThat(actualTodos).isEqualTo(expectedTodos);
     }

@@ -6,7 +6,7 @@ import java.util.Objects;
 public class Todo {
 
     private long id;
-    private String projectId;
+    private String project;
     private String content;
     private List<String> labels;
     private int order;
@@ -24,12 +24,12 @@ public class Todo {
         this.id = id;
     }
 
-    public String getProjectId() {
-        return projectId;
+    public String getProject() {
+        return project;
     }
 
-    public void setProjectId(String projectId) {
-        this.projectId = projectId;
+    public void setProject(String project) {
+        this.project = project;
     }
 
     public String getContent() {
@@ -106,7 +106,7 @@ public class Todo {
                 indent == todo.indent &&
                 priority == todo.priority &&
                 commentCount == todo.commentCount &&
-                Objects.equals(projectId, todo.projectId) &&
+                Objects.equals(project, todo.project) &&
                 Objects.equals(content, todo.content) &&
                 Objects.equals(labels, todo.labels) &&
                 Objects.equals(created, todo.created) &&
@@ -115,6 +115,6 @@ public class Todo {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, projectId, content, labels, order, indent, priority, commentCount, created, url);
+        return Objects.hash(id, project, content, labels, order, indent, priority, commentCount, created, url);
     }
 }
