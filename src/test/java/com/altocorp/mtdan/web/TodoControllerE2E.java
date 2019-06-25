@@ -1,8 +1,8 @@
 package com.altocorp.mtdan.web;
 
+import com.altocorp.mtdan.domain.Project;
 import com.altocorp.mtdan.domain.Todo;
 import com.altocorp.mtdan.todoist.TodoistLabel;
-import com.altocorp.mtdan.todoist.TodoistProject;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -43,9 +43,9 @@ public class TodoControllerE2E {
 
     @Test
     public void callingProjectsEndpoint_delegatesToTodosServiceToReturnProjects() {
-        ResponseEntity<List<TodoistProject>> projectsEntity = restTemplate.exchange("http://localhost:" + port + "/projects", HttpMethod.GET, null, new ParameterizedTypeReference<List<TodoistProject>>() {});
-        List<TodoistProject> todoistProjects = projectsEntity.getBody();
-        assertThat(todoistProjects.size()).isGreaterThan(0);
+        ResponseEntity<List<Project>> projectsEntity = restTemplate.exchange("http://localhost:" + port + "/projects", HttpMethod.GET, null, new ParameterizedTypeReference<List<Project>>() {});
+        List<Project> projects = projectsEntity.getBody();
+        assertThat(projects.size()).isGreaterThan(0);
     }
 
     @Test

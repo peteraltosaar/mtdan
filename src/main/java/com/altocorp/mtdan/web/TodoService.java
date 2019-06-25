@@ -1,5 +1,6 @@
 package com.altocorp.mtdan.web;
 
+import com.altocorp.mtdan.domain.Project;
 import com.altocorp.mtdan.domain.Todo;
 import com.altocorp.mtdan.todoist.TodoistLabel;
 import com.altocorp.mtdan.todoist.TodoistProject;
@@ -37,10 +38,11 @@ public class TodoService {
     }
 
     @Cacheable("todoistProjects")
-    public List<TodoistProject> getProjects() {
+    public List<Project> getProjects() {
         HttpEntity httpEntity = createTodoistHttpEntity();
         ResponseEntity<List<TodoistProject>> projectsEntity = restTemplate.exchange("https://beta.todoist.com/API/v8/projects", HttpMethod.GET, httpEntity, new ParameterizedTypeReference<List<TodoistProject>>() {});
-        return projectsEntity.getBody();
+        List<TodoistProject> todoistProjects = projectsEntity.getBody();
+        return createDomainProjects(todoistProjects);
     }
 
     @Cacheable("todoistLabels")
@@ -83,5 +85,18 @@ public class TodoService {
 
     private Map<Long, String> createMapOfLabelIdsToLabelNames(List<TodoistLabel> todoistLabels) {
         return todoistLabels.stream().collect(Collectors.toMap(TodoistLabel::getId, TodoistLabel::getName, (a, b) -> b));
+    }
+
+    private List<Project> createDomainProjects(List<TodoistProject> todoistProjects) {
+        List<Project> domainProjects = new ArrayList<>();
+        for (TodoistProject todoistProject : todoistProjects) {
+            Project domainProject = new Project();
+            domainProject.setId(todoistProject.getId());
+            domainProject.setName(todoistProject.getName());
+            domainProject.setOrder(todoistProject.getOrder());
+            domainProject.setIndent(todoistProject.getIndent());
+            domainProjects.add(domainProject);
+        }
+        return domainProjects;
     }
 }

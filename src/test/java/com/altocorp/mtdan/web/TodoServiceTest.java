@@ -1,5 +1,6 @@
 package com.altocorp.mtdan.web;
 
+import com.altocorp.mtdan.domain.Project;
 import com.altocorp.mtdan.domain.Todo;
 import com.altocorp.mtdan.todoist.TodoistLabel;
 import com.altocorp.mtdan.todoist.TodoistProject;
@@ -82,9 +83,12 @@ public class TodoServiceTest {
         ResponseEntity<List<TodoistProject>> expectedResponseEntity = new ResponseEntity<>(expectedTodoistProjects, HttpStatus.OK);
         when(restTemplate.exchange("https://beta.todoist.com/API/v8/projects", HttpMethod.GET, httpEntity, new ParameterizedTypeReference<List<TodoistProject>>() {})).thenReturn(expectedResponseEntity);
 
-        List<TodoistProject> actualTodoistProjects = fixture.getProjects();
+        List<Project> actualProjects = fixture.getProjects();
 
-        assertThat(actualTodoistProjects).isEqualTo(expectedTodoistProjects);
+        List<Project> expectedProjects = new ArrayList<>();
+        expectedProjects.add(new Project());
+
+        assertThat(actualProjects).isEqualTo(expectedProjects);
     }
 
     @Test
