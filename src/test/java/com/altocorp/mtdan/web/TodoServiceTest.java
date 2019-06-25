@@ -1,5 +1,6 @@
 package com.altocorp.mtdan.web;
 
+import com.altocorp.mtdan.domain.Todo;
 import com.altocorp.mtdan.todoist.TodoistLabel;
 import com.altocorp.mtdan.todoist.TodoistProject;
 import com.altocorp.mtdan.todoist.TodoistTodo;
@@ -39,14 +40,29 @@ public class TodoServiceTest {
         HttpEntity httpEntity = new HttpEntity(httpHeaders);
 
         List<TodoistTodo> expectedTodoistTodos = new ArrayList<>();
-        expectedTodoistTodos.add(new TodoistTodo());
+        TodoistTodo todoistTodo = new TodoistTodo();
+        List<Long> labelIds = new ArrayList<>();
+        labelIds.add(1L);
+        todoistTodo.setLabelIds(labelIds);
+        expectedTodoistTodos.add(todoistTodo);
 
-        ResponseEntity<List<TodoistTodo>> expectedResponseEntity = new ResponseEntity<>(expectedTodoistTodos, HttpStatus.OK);
-        when(restTemplate.exchange("https://beta.todoist.com/API/v8/tasks", HttpMethod.GET, httpEntity, new ParameterizedTypeReference<List<TodoistTodo>>() {})).thenReturn(expectedResponseEntity);
+        ResponseEntity<List<TodoistTodo>> expectedTasksResponseEntity = new ResponseEntity<>(expectedTodoistTodos, HttpStatus.OK);
+        when(restTemplate.exchange("https://beta.todoist.com/API/v8/tasks", HttpMethod.GET, httpEntity, new ParameterizedTypeReference<List<TodoistTodo>>() {})).thenReturn(expectedTasksResponseEntity);
 
-        List<TodoistTodo> actualTodoistTodos = fixture.getTodos();
+        List<TodoistLabel> expectedTodoistLabels = new ArrayList<>();
+        TodoistLabel todoistLabel = new TodoistLabel();
+        todoistLabel.setId(1);
+        todoistLabel.setName("some_label");
+        todoistLabel.setOrder(1);
+        expectedTodoistLabels.add(todoistLabel);
+        ResponseEntity<List<TodoistLabel>> expectedLabelsResponseEntity = new ResponseEntity<>(expectedTodoistLabels, HttpStatus.OK);
+        when(restTemplate.exchange("https://beta.todoist.com/API/v8/labels", HttpMethod.GET, httpEntity, new ParameterizedTypeReference<List<TodoistLabel>>() {})).thenReturn(expectedLabelsResponseEntity);
 
-        assertThat(actualTodoistTodos).isEqualTo(expectedTodoistTodos);
+        List<Todo> actualTodos = fixture.getTodos();
+
+        // Fix this assertion to be on the object as a whole, once it has an Equals implementation
+        Todo actualTodo = actualTodos.get(0);
+        assertThat(actualTodo.getLabels().get(0)).isEqualTo("some_label");
     }
 
     @Test

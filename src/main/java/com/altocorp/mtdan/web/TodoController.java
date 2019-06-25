@@ -1,8 +1,8 @@
 package com.altocorp.mtdan.web;
 
+import com.altocorp.mtdan.domain.Todo;
 import com.altocorp.mtdan.todoist.TodoistLabel;
 import com.altocorp.mtdan.todoist.TodoistProject;
-import com.altocorp.mtdan.todoist.TodoistTodo;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,7 +18,7 @@ public class TodoController {
     }
 
     @GetMapping(value = "/todos")
-    public List<TodoistTodo> todos() {
+    public List<Todo> todos() {
         return todoService.getTodos();
     }
 

@@ -1,5 +1,6 @@
 package com.altocorp.mtdan.web;
 
+import com.altocorp.mtdan.domain.Todo;
 import com.altocorp.mtdan.todoist.TodoistLabel;
 import com.altocorp.mtdan.todoist.TodoistProject;
 import com.altocorp.mtdan.todoist.TodoistTodo;
@@ -10,7 +11,10 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class TodoService {
 
@@ -22,10 +26,12 @@ public class TodoService {
         this.todoistBearerToken = todoistBearerToken;
     }
 
-    List<TodoistTodo> getTodos() {
+    List<Todo> getTodos() {
         HttpEntity httpEntity = createTodoistHttpEntity();
         ResponseEntity<List<TodoistTodo>> todosEntity = restTemplate.exchange("https://beta.todoist.com/API/v8/tasks", HttpMethod.GET, httpEntity, new ParameterizedTypeReference<List<TodoistTodo>>() {});
-        return todosEntity.getBody();
+        List<TodoistLabel> todoistLabels = getLabels();
+        List<TodoistTodo> todoistTodos = todosEntity.getBody();
+        return createDomainTodos(todoistTodos, todoistLabels);
     }
 
     List<TodoistProject> getProjects() {
@@ -46,4 +52,32 @@ public class TodoService {
         return new HttpEntity(httpHeaders);
     }
 
+    private List<Todo> createDomainTodos(List<TodoistTodo> todoistTodos, List<TodoistLabel> todoistLabels) {
+        Map<Long, String> mapOfLabelIdsToLabelNames = createMapOfLabelIdsToLabelNames(todoistLabels);
+
+        List<Todo> domainTodos = new ArrayList<>();
+        for (TodoistTodo todoistTodo : todoistTodos) {
+            Todo domainTodo = new Todo();
+            domainTodo.setId(todoistTodo.getId());
+            domainTodo.setProjectId(todoistTodo.getProjectId());
+            domainTodo.setContent(todoistTodo.getContent());
+            List<String> labels = new ArrayList<>();
+            for (Long id : todoistTodo.getLabelIds()) {
+                labels.add(mapOfLabelIdsToLabelNames.get(id));
+            }
+            domainTodo.setLabels(labels);
+            domainTodo.setOrder(todoistTodo.getOrder());
+            domainTodo.setIndent(todoistTodo.getIndent());
+            domainTodo.setPriority(todoistTodo.getPriority());
+            domainTodo.setCommentCount(todoistTodo.getCommentCount());
+            domainTodo.setCreated(todoistTodo.getCreated());
+            domainTodo.setUrl(todoistTodo.getUrl());
+            domainTodos.add(domainTodo);
+        }
+        return domainTodos;
+    }
+
+    private Map<Long, String> createMapOfLabelIdsToLabelNames(List<TodoistLabel> todoistLabels) {
+        return todoistLabels.stream().collect(Collectors.toMap(TodoistLabel::getId, TodoistLabel::getName, (a, b) -> b));
+    }
 }

@@ -1,8 +1,8 @@
 package com.altocorp.mtdan.web;
 
+import com.altocorp.mtdan.domain.Todo;
 import com.altocorp.mtdan.todoist.TodoistLabel;
 import com.altocorp.mtdan.todoist.TodoistProject;
-import com.altocorp.mtdan.todoist.TodoistTodo;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -31,14 +31,14 @@ public class TodoControllerTest {
     @Test
     public void callingTodosEndpoint_delegatesToTodoServiceForTodos() {
 
-        List<TodoistTodo> expectedTodoistTodos = new ArrayList<>();
-        expectedTodoistTodos.add(new TodoistTodo());
+        List<Todo> expectedTodos = new ArrayList<>();
+        expectedTodos.add(new Todo());
 
-        when(todoService.getTodos()).thenReturn(expectedTodoistTodos);
+        when(todoService.getTodos()).thenReturn(expectedTodos);
 
-        List<TodoistTodo> actualTodoistTodos = fixture.todos();
+        List<Todo> actualTodos = fixture.todos();
 
-        assertThat(actualTodoistTodos).isEqualTo(expectedTodoistTodos);
+        assertThat(actualTodos).isEqualTo(expectedTodos);
     }
 
     @Test
