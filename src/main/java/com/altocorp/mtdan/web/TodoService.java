@@ -31,7 +31,7 @@ public class TodoService {
     @Cacheable("todoistTasks")
     public List<Todo> getTodos() {
         HttpEntity httpEntity = createTodoistHttpEntity();
-        ResponseEntity<List<TodoistTodo>> todosEntity = restTemplate.exchange("https://beta.todoist.com/API/v8/tasks", HttpMethod.GET, httpEntity, new ParameterizedTypeReference<List<TodoistTodo>>() {});
+        ResponseEntity<List<TodoistTodo>> todosEntity = restTemplate.exchange("https://api.todoist.com/rest/v1/tasks", HttpMethod.GET, httpEntity, new ParameterizedTypeReference<List<TodoistTodo>>() {});
         List<TodoistLabel> todoistLabels = getLabels();
         List<Project> projects = getProjects();
         List<TodoistTodo> todoistTodos = todosEntity.getBody();
@@ -41,7 +41,7 @@ public class TodoService {
     @Cacheable("todoistProjects")
     public List<Project> getProjects() {
         HttpEntity httpEntity = createTodoistHttpEntity();
-        ResponseEntity<List<TodoistProject>> projectsEntity = restTemplate.exchange("https://beta.todoist.com/API/v8/projects", HttpMethod.GET, httpEntity, new ParameterizedTypeReference<List<TodoistProject>>() {});
+        ResponseEntity<List<TodoistProject>> projectsEntity = restTemplate.exchange("https://api.todoist.com/rest/v1/projects", HttpMethod.GET, httpEntity, new ParameterizedTypeReference<List<TodoistProject>>() {});
         List<TodoistProject> todoistProjects = projectsEntity.getBody();
         return createDomainProjects(todoistProjects);
     }
@@ -49,7 +49,7 @@ public class TodoService {
     @Cacheable("todoistLabels")
     public List<TodoistLabel> getLabels() {
         HttpEntity httpEntity = createTodoistHttpEntity();
-        ResponseEntity<List<TodoistLabel>> projectsEntity = restTemplate.exchange("https://beta.todoist.com/API/v8/labels", HttpMethod.GET, httpEntity, new ParameterizedTypeReference<List<TodoistLabel>>() {});
+        ResponseEntity<List<TodoistLabel>> projectsEntity = restTemplate.exchange("https://api.todoist.com/rest/v1/labels", HttpMethod.GET, httpEntity, new ParameterizedTypeReference<List<TodoistLabel>>() {});
         return projectsEntity.getBody();
     }
 

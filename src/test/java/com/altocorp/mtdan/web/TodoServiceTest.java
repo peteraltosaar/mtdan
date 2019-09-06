@@ -49,7 +49,7 @@ public class TodoServiceTest {
         expectedTodoistTodos.add(todoistTodo);
 
         ResponseEntity<List<TodoistTodo>> expectedTasksResponseEntity = new ResponseEntity<>(expectedTodoistTodos, HttpStatus.OK);
-        when(restTemplate.exchange("https://beta.todoist.com/API/v8/tasks", HttpMethod.GET, httpEntity, new ParameterizedTypeReference<List<TodoistTodo>>() {})).thenReturn(expectedTasksResponseEntity);
+        when(restTemplate.exchange("https://api.todoist.com/rest/v1/tasks", HttpMethod.GET, httpEntity, new ParameterizedTypeReference<List<TodoistTodo>>() {})).thenReturn(expectedTasksResponseEntity);
 
         List<TodoistProject> expectedTodoistProjects = new ArrayList<>();
         TodoistProject todoistProject = new TodoistProject();
@@ -61,7 +61,7 @@ public class TodoServiceTest {
         expectedTodoistProjects.add(todoistProject);
 
         ResponseEntity<List<TodoistProject>> expectedProjectsResponseEntity = new ResponseEntity<>(expectedTodoistProjects, HttpStatus.OK);
-        when(restTemplate.exchange("https://beta.todoist.com/API/v8/projects", HttpMethod.GET, httpEntity, new ParameterizedTypeReference<List<TodoistProject>>() {})).thenReturn(expectedProjectsResponseEntity);
+        when(restTemplate.exchange("https://api.todoist.com/rest/v1/projects", HttpMethod.GET, httpEntity, new ParameterizedTypeReference<List<TodoistProject>>() {})).thenReturn(expectedProjectsResponseEntity);
 
         List<TodoistLabel> expectedTodoistLabels = new ArrayList<>();
         TodoistLabel todoistLabel = new TodoistLabel();
@@ -70,7 +70,7 @@ public class TodoServiceTest {
         todoistLabel.setOrder(1);
         expectedTodoistLabels.add(todoistLabel);
         ResponseEntity<List<TodoistLabel>> expectedLabelsResponseEntity = new ResponseEntity<>(expectedTodoistLabels, HttpStatus.OK);
-        when(restTemplate.exchange("https://beta.todoist.com/API/v8/labels", HttpMethod.GET, httpEntity, new ParameterizedTypeReference<List<TodoistLabel>>() {})).thenReturn(expectedLabelsResponseEntity);
+        when(restTemplate.exchange("https://api.todoist.com/rest/v1/labels", HttpMethod.GET, httpEntity, new ParameterizedTypeReference<List<TodoistLabel>>() {})).thenReturn(expectedLabelsResponseEntity);
 
         List<Todo> actualTodos = fixture.getTodos();
 
@@ -95,7 +95,7 @@ public class TodoServiceTest {
         expectedTodoistProjects.add(new TodoistProject());
 
         ResponseEntity<List<TodoistProject>> expectedResponseEntity = new ResponseEntity<>(expectedTodoistProjects, HttpStatus.OK);
-        when(restTemplate.exchange("https://beta.todoist.com/API/v8/projects", HttpMethod.GET, httpEntity, new ParameterizedTypeReference<List<TodoistProject>>() {})).thenReturn(expectedResponseEntity);
+        when(restTemplate.exchange("https://api.todoist.com/rest/v1/projects", HttpMethod.GET, httpEntity, new ParameterizedTypeReference<List<TodoistProject>>() {})).thenReturn(expectedResponseEntity);
 
         List<Project> actualProjects = fixture.getProjects();
 
@@ -116,7 +116,7 @@ public class TodoServiceTest {
         expectedTodoistLabels.add(new TodoistLabel());
 
         ResponseEntity<List<TodoistLabel>> expectedResponseEntity = new ResponseEntity<>(expectedTodoistLabels, HttpStatus.OK);
-        when(restTemplate.exchange("https://beta.todoist.com/API/v8/labels", HttpMethod.GET, httpEntity, new ParameterizedTypeReference<List<TodoistLabel>>() {})).thenReturn(expectedResponseEntity);
+        when(restTemplate.exchange("https://api.todoist.com/rest/v1/labels", HttpMethod.GET, httpEntity, new ParameterizedTypeReference<List<TodoistLabel>>() {})).thenReturn(expectedResponseEntity);
 
         List<TodoistLabel> actualTodoistLabels = fixture.getLabels();
 
