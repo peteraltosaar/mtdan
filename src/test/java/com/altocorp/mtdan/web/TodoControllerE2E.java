@@ -52,6 +52,6 @@ public class TodoControllerE2E {
     public void callingLabelsEndpoint_delegatesToTodosServiceToReturnLabels() {
         ResponseEntity<List<TodoistLabel>> projectsEntity = restTemplate.exchange("http://localhost:" + port + "/labels", HttpMethod.GET, null, new ParameterizedTypeReference<List<TodoistLabel>>() {});
         List<TodoistLabel> projects = projectsEntity.getBody();
-        assertThat(projects.size()).isEqualTo(0);
+        assertThat(projects.size()).isGreaterThan(0);
     }
 }
