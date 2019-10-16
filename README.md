@@ -43,3 +43,19 @@ I am going to try and incorporate as many interesting technologies/practices I h
   * Postgres
 * Practices
   * TDD
+
+## Security Tests
+
+Find-Sec-Bugs can be run as part of the build with the following target:
+
+`
+mvn spotbugs:spotbugs
+`
+
+Results can be found in `target/spotbugsXml.xml`.
+
+The Find-Sec-Bugs GUI can be run to show the same results:
+
+`mvn spotbugs:gui`
+
+For more details see: https://find-sec-bugs.github.io/
