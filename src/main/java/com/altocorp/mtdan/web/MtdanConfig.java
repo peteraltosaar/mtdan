@@ -7,7 +7,11 @@ import org.springframework.cache.concurrent.ConcurrentMapCacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
+
+import java.net.InetSocketAddress;
+import java.net.Proxy;
 
 @Configuration
 @PropertySource("classpath:application.properties")
@@ -25,7 +29,12 @@ public class MtdanConfig {
 
     @Bean
     public RestTemplate restTemplate() {
-        return new RestTemplate();
+        SimpleClientHttpRequestFactory requestFactory = new SimpleClientHttpRequestFactory();
+
+        Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress("localhost", 8500));
+        requestFactory.setProxy(proxy);
+
+        return new RestTemplate(requestFactory);
     }
 
     @Bean
